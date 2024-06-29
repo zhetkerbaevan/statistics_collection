@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS order_book (
+    id SERIAL PRIMARY KEY,
+    exchange VARCHAR(255) NOT NULL,
+    pair VARCHAR(255) NOT NULL
+);
