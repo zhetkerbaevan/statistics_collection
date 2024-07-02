@@ -2,13 +2,28 @@ package models
 
 import "time"
 
+type DepthOrderData struct {  //Structure for receiving data from database
+	Id int
+	OrderBookId int 
+	Price   float64 `json:"price"`
+	BaseQty float64 `json:"baseqty"`
+	OrderType string 
+}
+
 type DepthOrder struct {
 	Price   float64 `json:"price"`
 	BaseQty float64 `json:"baseqty"`
+	OrderType string `json:"ordertype"`
+}
+
+type OrderBook struct {
+	Exchange_name	string `json:"exchange_name"`
+	Pair            string `json:"pair"`
+	Depth_orders 	[]*DepthOrder `json:"depth_orders"`
 }
 
 type HistoryOrder struct {
-	Id int `json:"id"`
+	Id 					  int `json:"id"`
 	Client_name           string `json:"client_name"`
 	Exchange_name         string `json:"exchange_name"`
 	Label                 string `json:"label"`
@@ -34,6 +49,7 @@ type Client struct {
 type OrderBookStoreInterface interface {
 	GetOrderBook(exchange_name, pair string) ([]*DepthOrder, error)
 	SaveOrderBook(exchange_name, pair string, orderBook []*DepthOrder) error
+	GetDepthOrderById(id int) ([]*DepthOrder, error)
 }
 
 type OrderHistoryInterface interface {
